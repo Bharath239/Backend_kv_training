@@ -1,6 +1,7 @@
 import express from "express";
 import employee_router from "./employee_router";
 import loggerMiddleware from "./loggerMiddleware";
+import dataSource from "./data-source";
 
 const server = express();
 
@@ -13,8 +14,11 @@ server.get('/*',(req,res)=>{
     res.status(200).send("Hello World Typescript");
 });
 
-server.listen(3000,()=>{
+(async ()=>{
+    await dataSource.initialize();
+    server.listen(3000,()=>{
     console.log("Server is listening to 3000");
-});
+    })
+})();
 
 
