@@ -6,7 +6,7 @@ interface CalculatorInterface {
     power(a: number, b: number): number;
   }
   
-  class calculator implements CalculatorInterface{
+export default class calculator implements CalculatorInterface{
       add(a: number,b: number): number{
           return a+b;
       }
@@ -27,5 +27,3 @@ interface CalculatorInterface {
       }
   }
   
-  const c = new calculator();
-  console.log(c.add(4,6));
