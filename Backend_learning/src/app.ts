@@ -1,13 +1,13 @@
 import express from "express";
-import employee_router from "./employee_router";
-import loggerMiddleware from "./loggerMiddleware";
-import dataSource from "./data-source";
+import loggerMiddleware from "./middleware/logger.middleware";
+import dataSource from "./db/postgres.db";
+import employeeRoute from "./route/employee.route";
 
 const server = express();
 
 server.use(express.json());
 server.use(loggerMiddleware);
-server.use('/employees',employee_router);
+server.use('/employees',employeeRoute);
 
 server.get('/*',(req,res)=>{
     console.log(req.url);
