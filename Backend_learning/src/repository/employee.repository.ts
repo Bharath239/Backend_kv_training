@@ -8,25 +8,31 @@ export default class EmployeeRepository{
 
     findAllEmployees(): Promise<Employee[]>
     {
-        return this.employeeRepository.find();
-    }
-
-    findEmployeeById(id: number): Promise<Employee> {
-        return this.employeeRepository.findOneBy({
-            id: id
-        })
-    }
-
-    async deleteEmployeeById(id: number): Promise<Employee> {
-        return await this.employeeRepository.softRemove({
-            id: id
+        return this.employeeRepository.find({
+            relations:{
+                address: true
+            }
         });
     }
 
-    // async createEmployeeById(id: number): Promise<Employee> {
-    //     const newemployee = 
-    //     return await this.employeeRepository.save({
+    findEmployeeById(id: number): Promise<Employee> {
+        return this.employeeRepository.findOne({
+            where:{id: id},
+            relations:{
+                address:true
+            }
+        })
+    }
 
-    //     })
-    // }
+    async deleteEmployeeById(employee: Employee): Promise<Employee> {
+        return await this.employeeRepository.softRemove(employee);
+    }
+
+    async createEmployee(newemployee: Employee): Promise<Employee> {
+        return await this.employeeRepository.save(newemployee);
+    }
+    
+    async putEmployee(employee: Employee): Promise<Employee> {
+        return await this.employeeRepository.save(employee);
+    }
 }

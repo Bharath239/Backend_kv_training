@@ -1,20 +1,32 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import "reflect-metadata";
+import Address from "./address.entity";
 
 @Entity("employees")
 class Employee{
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
+
     @Column()
-    name: string
+    name: string;
+
+    @Column({nullable: true})
+    age: number;
+
     @Column()
-    email: string
+    email: string;
+
     @CreateDateColumn()
-    createdAt: Date
+    createdAt: Date;
+
     @UpdateDateColumn()
-    updatedAt: Date
+    updatedAt: Date;
+
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToOne(() => Address, (address) => address.employee, {cascade:true})
+    address: Address;
 }
 
 export default Employee;
