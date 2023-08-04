@@ -4,8 +4,8 @@ import httpException from "./http.exception";
 class ValidationException extends httpException{
 
     public errObject = {}
-    constructor(status: number,message: string,validationErrors: ValidationError[]){
-        super(status, message);
+    constructor(validationErrors: ValidationError[]){
+        super(400, "Validation Errors");
         validationErrors.map((error) => {
             if (error.children.length > 0){
                 const errchildObject = {};
@@ -21,5 +21,7 @@ class ValidationException extends httpException{
         )
     }
 }
+
+// use recursion to find children constraints
 
 export default ValidationException;

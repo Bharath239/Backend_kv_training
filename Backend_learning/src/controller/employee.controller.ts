@@ -54,7 +54,7 @@ class EmployeeController{
             const createEmployeeDto = plainToInstance(CreateEmployeeDto,req.body);
             const errors = await validate(createEmployeeDto);
             if (errors.length>0){
-                throw new ValidationException(400,"Validation Errors",errors);
+                throw new ValidationException(errors);
             }
             const employee = await this.employeeService.createEmployee(name,email,address);
             res.status(201).send(employee);
@@ -72,7 +72,7 @@ class EmployeeController{
             const createEmployeeDto = plainToInstance(CreateEmployeeDto,req.body);
             const errors = await validate(createEmployeeDto);
             if(errors.length>0){
-                throw new ValidationException(400,"Validation Errors",errors);
+                throw new ValidationException(errors);
             }
             const employee = await this.employeeService.putEmployee(name,email,address,employeeId);
             res.status(201).send(employee);
