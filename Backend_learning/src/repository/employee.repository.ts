@@ -24,6 +24,15 @@ export default class EmployeeRepository{
         })
     }
 
+    findEmployeeByEmail(email: string): Promise<Employee> {
+        return this.employeeRepository.findOne({
+            where:{email: email},
+            relations:{
+                address:true
+            }
+        })
+    }
+
     async deleteEmployeeById(employee: Employee): Promise<Employee> {
         return await this.employeeRepository.softRemove(employee);
     }

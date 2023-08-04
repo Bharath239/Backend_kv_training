@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv"
+dotenv.config({path: __dirname+"/.env"})
+
 import express from "express";
 import loggerMiddleware from "./middleware/logger.middleware";
 import dataSource from "./db/postgres.db";
@@ -18,7 +21,7 @@ server.get("/*", (req, res) => {
 
 (async () => {
   await dataSource.initialize();
-  server.listen(3000, () => {
+  server.listen(process.env.PORT, () => {
     console.log("Server is listening to 3000");
   });
 })();

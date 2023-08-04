@@ -1,12 +1,11 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column,Entity, OneToOne,} from "typeorm";
 import "reflect-metadata";
 import Address from "./address.entity";
+import AbstractEntity from "./abstract.entity";
+import { Role } from "../utils/role.enum";
 
 @Entity("employees")
-class Employee{
-    @PrimaryGeneratedColumn()
-    id: number;
-
+class Employee extends AbstractEntity{
     @Column()
     name: string;
 
@@ -16,17 +15,14 @@ class Employee{
     @Column()
     email: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
-
-    @DeleteDateColumn()
-    deletedAt: Date;
-
     @OneToOne(() => Address, (address) => address.employee, {cascade:true})
     address: Address;
+
+    @Column()
+    password: string;
+
+    @Column({default: Role.DEVELOPER})
+    role: Role;
 }
 
 export default Employee;
