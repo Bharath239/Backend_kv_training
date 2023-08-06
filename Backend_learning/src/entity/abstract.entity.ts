@@ -1,8 +1,9 @@
 import { CreateDateColumn, DeleteDateColumn,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UUID } from "typeorm/driver/mongodb/bson.typings";
 
 class AbstractEntity{
     @PrimaryGeneratedColumn()
-    id: number;
+    id: UUID;
 
     @CreateDateColumn()
     createdAt: Date;

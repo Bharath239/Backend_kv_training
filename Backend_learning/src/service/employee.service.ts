@@ -5,15 +5,14 @@ import httpException from "../exception/http.exception";
 import EmployeeRepository from "../repository/employee.repository";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
-import { Role } from "../utils/role.enum";
+import CreateEmployeeDto from "../dto/create.employee.dto";
+import LoginCredentialsDto from "../dto/login.credential.dto";
 
 class EmployeeService{
-    
-
     constructor(private employeeRepository :EmployeeRepository){
     }
 
-    async getAllEmployees(): Promise<Employee[]> {
+    async getAllEmployees(): Promise<Employee[] | null> {
         const employees: Employee[] = await this.employeeRepository.findAllEmployees();
         if(employees.length == 0){
             throw new httpException(404,"Elements not found");
@@ -29,63 +28,88 @@ class EmployeeService{
         return employee;
     }
 
-    async deleteEmployeeById(id: number): Promise<Employee | void>{
-        const employee = await this.getEmployeeById(id)
-        if(employee){
-            return this.employeeRepository.deleteEmployeeById(employee);
+    async createEmployee(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
+        const usernameCheck = await this.employeeRepository.findEmployeeByUsername(createEmployeeDto.username);
+        if(usernameCheck){
+            throw new httpException(409,"Username is taken");
         }
-    }
-
-    async createEmployee(name: string, email: string, address: Address, password: string, role: Role, age: number): Promise<Employee> {
         const newemployee = new Employee();
-        newemployee.name = name;
-        newemployee.email = email;
-        newemployee.password = await bcrypt.hash(password,10)
-        newemployee.role = role;
-        newemployee.age = age;
+        newemployee.name = createEmployeeDto.name;
+        newemployee.username = createEmployeeDto.username;
+        // newemployee.email = createEmployeeDto.email;
+        newemployee.password = await bcrypt.hash(createEmployeeDto.password,10);
+        newemployee.joiningDate = createEmployeeDto.joiningDate;
+        newemployee.experience = createEmployeeDto.experience;
+        // newemployee.departmentId = createEmployeeDto.departmentId;
+        newemployee.role = createEmployeeDto.role;
+        const newaddress = new Address();
+        
+        newaddress.address_line_1 = createEmployeeDto.address.address_line_1;
+        newaddress.address_line_2 = createEmployeeDto.address.address_line_2;
+        newaddress.city = createEmployeeDto.address.city;
+        newaddress.state = createEmployeeDto.address.state;
+        newaddress.country = createEmployeeDto.address.country;
+        newaddress.pincode = createEmployeeDto.address.pincode;
 
-        const neweaddress = new Address();
-        neweaddress.line1 = address.line1;
-        neweaddress.pincode = address.pincode;
-
-        newemployee.address = neweaddress;
+        newemployee.address = newaddress;
 
         return this.employeeRepository.createEmployee(newemployee);
     }
 
-    async putEmployee(name: string, email: string,address: Address,id: number): Promise<Employee> {
+    async putEmployee(createEmployeeDto: CreateEmployeeDto,id: number): Promise<Employee> {
         const employee = await this.getEmployeeById(id);
-        employee.name = name;
-        employee.email = email;
-        employee.address.line1 = address.line1;
-        employee.address.pincode = address.pincode;
+        employee.name = createEmployeeDto.name;
+        const usernameCheck = await this.employeeRepository.findEmployeeByUsername(createEmployeeDto.username);
+        if(usernameCheck){
+            throw new httpException(409,"Username is taken");
+        }
+        employee.username = createEmployeeDto.username;
+        // employee.email = createEmployeeDto.email;
+        employee.password = await bcrypt.hash(createEmployeeDto.password,10);
+        employee.joiningDate = createEmployeeDto.joiningDate;
+        employee.experience = createEmployeeDto.experience;
+        // employee.departmentId = createEmployeeDto.departmentId;
+        employee.role = createEmployeeDto.role;
+
+        employee.address.address_line_1 = createEmployeeDto.address.address_line_1;
+        employee.address.address_line_2 = createEmployeeDto.address.address_line_2;
+        employee.address.city = createEmployeeDto.address.city;
+        employee.address.state = createEmployeeDto.address.state;
+        employee.address.country = createEmployeeDto.address.country;
+        employee.address.pincode = createEmployeeDto.address.pincode;
         return this.employeeRepository.putEmployee(employee);
     }
 
-    loginEmployee = async (
-        email: string,
-        password: string
-    ) => {
-        const employee = await this.employeeRepository.findEmployeeByEmail(email);
+    async deleteEmployeeById(id: number): Promise<Employee | void>{
+        const employee = await this.getEmployeeById(id);
+        if(employee){
+            return await this.employeeRepository.deleteEmployeeById(employee);
+        }
+    }       
+
+    loginEmployee = async (loginCredentialsDto: LoginCredentialsDto) => {
+        const employee = await this.employeeRepository.findEmployeeByUsername(loginCredentialsDto.username);
         if(!employee){
             throw new HttpException(404,"Element not found");
         }
-        const result = await bcrypt.compare(password, employee.password);
+        employee.isActive = true;
+        const result = await bcrypt.compare(loginCredentialsDto.password, employee.password);
         if(!result){
             throw new HttpException(401,"Incorrect username or password");
         }
 
+
         const payload = {
             name: employee.name,
-            email: employee.email,
+            username: employee.username,
             role: employee.role
         }
 
         const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET_KEY, {  
-            expiresIn:"1h"
+            expiresIn:process.env.TOKEN_EXPIRY_TIME
          });
 
-         return {token: token};
+         return {token: token, employeeDetails: employee};
     }
 }
 

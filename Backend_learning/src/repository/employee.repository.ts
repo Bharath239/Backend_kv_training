@@ -6,8 +6,7 @@ export default class EmployeeRepository{
     constructor(private employeeRepository: Repository<Employee>){
     }
 
-    findAllEmployees(): Promise<Employee[]>
-    {
+    findAllEmployees(): Promise<Employee[]>{
         return this.employeeRepository.find({
             relations:{
                 address: true
@@ -24,9 +23,9 @@ export default class EmployeeRepository{
         })
     }
 
-    findEmployeeByEmail(email: string): Promise<Employee> {
+    findEmployeeByUsername(username: string): Promise<Employee> {
         return this.employeeRepository.findOne({
-            where:{email: email},
+            where:{username: username},
             relations:{
                 address:true
             }

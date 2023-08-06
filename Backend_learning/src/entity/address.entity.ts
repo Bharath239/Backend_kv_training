@@ -5,8 +5,20 @@ import AbstractEntity from "./abstract.entity";
 @Entity("address")
 class Address extends AbstractEntity{
     @Column()
-    line1: string;
+    address_line_1: string;
 
+    @Column()
+    address_line_2: string;
+
+    @Column()
+    city: string;
+
+    @Column()
+    state: string;
+
+    @Column()
+    country: string;
+    
     @Column()
     pincode: string;
 

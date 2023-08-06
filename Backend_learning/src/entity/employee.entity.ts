@@ -1,28 +1,46 @@
-import { Column,Entity, OneToOne,} from "typeorm";
+import { Column,Entity, ManyToOne, OneToOne,} from "typeorm";
 import "reflect-metadata";
 import Address from "./address.entity";
 import AbstractEntity from "./abstract.entity";
 import { Role } from "../utils/role.enum";
+import Department from "./department.entity";
+import Roles from "./role.entity";
 
 @Entity("employees")
 class Employee extends AbstractEntity{
     @Column()
     name: string;
 
-    @Column({nullable: true})
-    age: number;
-
     @Column()
-    email: string;
-
-    @OneToOne(() => Address, (address) => address.employee, {cascade:true})
-    address: Address;
+    username: string;
+        
+    // @Column()
+    // email: string;
 
     @Column()
     password: string;
 
-    @Column({default: Role.DEVELOPER})
+    @Column()
+    joiningDate: string;
+
+    @Column()
+    experience: number;
+
+    @Column()
+    departmentId: number;
+
+    @Column({default: false})
+    isActive: Boolean;
+
+    @ManyToOne(() => Roles, (role) => role.employees)
     role: Role;
+
+    @OneToOne(() => Address, (address) => address.employee, {cascade:true})
+    address: Address;
+
+    @ManyToOne(() => Department, (department) => department.employees)
+    department: number;
+
 }
 
 export default Employee;
