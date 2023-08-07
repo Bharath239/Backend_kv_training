@@ -43,4 +43,8 @@ export default class EmployeeRepository{
     async putEmployee(employee: Employee): Promise<Employee> {
         return await this.employeeRepository.save(employee);
     }
+
+    async patchEmployee(employee: Employee): Promise<Employee> {
+        return await this.employeeRepository.save(employee);
+    }
 }

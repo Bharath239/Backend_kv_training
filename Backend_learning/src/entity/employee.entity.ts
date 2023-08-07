@@ -29,7 +29,7 @@ class Employee extends AbstractEntity{
     @Column()
     departmentId: number;
 
-    @Column({default: false})
+    @Column({default: true})
     isActive: Boolean;
 
     @Column()

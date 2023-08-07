@@ -1,12 +1,12 @@
 import Address from "../entity/address.entity";
 import Employee from "../entity/employee.entity";
 import HttpException from "../exception/http.exception";
-import httpException from "../exception/http.exception";
 import EmployeeRepository from "../repository/employee.repository";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import CreateEmployeeDto from "../dto/create.employee.dto";
 import LoginCredentialsDto from "../dto/login.credential.dto";
+import PatchEmployeeDto from "../dto/patch.employee.dto";
 
 class EmployeeService{
     constructor(private employeeRepository :EmployeeRepository){
@@ -15,7 +15,7 @@ class EmployeeService{
     async getAllEmployees(): Promise<Employee[] | null> {
         const employees: Employee[] = await this.employeeRepository.findAllEmployees();
         if(employees.length == 0){
-            throw new httpException(404,"Elements not found");
+            throw new HttpException(404,"Elements not found");
         }
         return employees;
     }
@@ -23,7 +23,7 @@ class EmployeeService{
     async getEmployeeById(id: number): Promise<Employee | null> {
         const employee = await this.employeeRepository.findEmployeeById(id);
         if(!employee){
-            throw new httpException(404,"Element not found");
+            throw new HttpException(404,"Element not found");
         }
         return employee;
     }
@@ -31,7 +31,7 @@ class EmployeeService{
     async createEmployee(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
         const usernameCheck = await this.employeeRepository.findEmployeeByUsername(createEmployeeDto.username);
         if(usernameCheck){
-            throw new httpException(409,"Username is taken");
+            throw new HttpException(409,"Username is taken");
         }
         const newemployee = new Employee();
         newemployee.name = createEmployeeDto.name;
@@ -61,7 +61,7 @@ class EmployeeService{
         employee.name = createEmployeeDto.name;
         const usernameCheck = await this.employeeRepository.findEmployeeByUsername(createEmployeeDto.username);
         if(usernameCheck){
-            throw new httpException(409,"Username is taken");
+            throw new HttpException(409,"Username is taken");
         }
         employee.username = createEmployeeDto.username;
         // employee.email = createEmployeeDto.email;
@@ -77,7 +77,24 @@ class EmployeeService{
         employee.address.state = createEmployeeDto.address.state;
         employee.address.country = createEmployeeDto.address.country;
         employee.address.pincode = createEmployeeDto.address.pincode;
-        return this.employeeRepository.putEmployee(employee);
+        const updatedEmployee = await this.employeeRepository.putEmployee(employee);
+        return updatedEmployee;
+    }
+
+    async patchEmployee(patchEmployeeDto: PatchEmployeeDto, id: number): Promise<Employee> {
+        const employee = await this.getEmployeeById(id);
+        for (const key of Object.keys(patchEmployeeDto)) {
+            if(key in employee){
+                if(key == "username"){
+                    const usernameCheck = await this.employeeRepository.findEmployeeByUsername(patchEmployeeDto.username);
+                    if(usernameCheck){
+                        throw new HttpException(409,"Username is taken");
+                    }
+                }
+                employee[key] = patchEmployeeDto[key];
+            }
+        }
+        return this.employeeRepository.patchEmployee(employee);
     }
 
     async deleteEmployeeById(id: number): Promise<Employee | void>{
@@ -92,7 +109,6 @@ class EmployeeService{
         if(!employee){
             throw new HttpException(404,"Element not found");
         }
-        employee.isActive = true;
         const result = await bcrypt.compare(loginCredentialsDto.password, employee.password);
         if(!result){
             throw new HttpException(401,"Incorrect username or password");

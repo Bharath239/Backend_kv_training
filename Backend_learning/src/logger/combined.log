@@ -1,0 +1,40 @@
+[2023-08-07T08:47:32.866Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T08:57:35.404Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T08:57:37.310Z] undefined [32minfo[39m: Mon Aug 07 2023 14:27:37 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T08:57:37.313Z] undefined [31merror[39m: Request Failed
+[2023-08-07T08:57:44.008Z] undefined [32minfo[39m: Mon Aug 07 2023 14:27:44 GMT+0530 (India Standard Time): /api/employees/login: POST
+[2023-08-07T08:57:56.276Z] undefined [32minfo[39m: Mon Aug 07 2023 14:27:56 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T08:58:45.703Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T08:58:57.213Z] undefined [32minfo[39m: Mon Aug 07 2023 14:28:57 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T08:59:33.757Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T08:59:39.539Z] undefined [32minfo[39m: Mon Aug 07 2023 14:29:39 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:00:53.004Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:00:55.835Z] undefined [32minfo[39m: Mon Aug 07 2023 14:30:55 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:01:43.480Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:02:19.071Z] undefined [32minfo[39m: Mon Aug 07 2023 14:32:19 GMT+0530 (India Standard Time): /api/employees: GET
+[2023-08-07T09:02:43.762Z] undefined [32minfo[39m: Mon Aug 07 2023 14:32:43 GMT+0530 (India Standard Time): /api/employees/8: DELETE
+[2023-08-07T09:02:47.857Z] undefined [32minfo[39m: Mon Aug 07 2023 14:32:47 GMT+0530 (India Standard Time): /api/employees/7: DELETE
+[2023-08-07T09:02:51.622Z] undefined [32minfo[39m: Mon Aug 07 2023 14:32:51 GMT+0530 (India Standard Time): /api/employees/6: DELETE
+[2023-08-07T09:02:57.787Z] undefined [32minfo[39m: Mon Aug 07 2023 14:32:57 GMT+0530 (India Standard Time): /api/employees/5: DELETE
+[2023-08-07T09:03:53.930Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:04:05.899Z] undefined [32minfo[39m: Mon Aug 07 2023 14:34:05 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:04:06.003Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:11:37.261Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:11:53.829Z] undefined [32minfo[39m: Mon Aug 07 2023 14:41:53 GMT+0530 (India Standard Time): /api/employees: GET
+[2023-08-07T09:11:53.861Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:12:06.215Z] undefined [32minfo[39m: Mon Aug 07 2023 14:42:06 GMT+0530 (India Standard Time): /api/employees/9: DELETE
+[2023-08-07T09:12:06.274Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:13:30.120Z] undefined [32minfo[39m: Mon Aug 07 2023 14:43:30 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:13:30.126Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:14:08.849Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:14:15.853Z] undefined [32minfo[39m: Mon Aug 07 2023 14:44:15 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:14:15.863Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:14:26.052Z] undefined [32minfo[39m: Mon Aug 07 2023 14:44:26 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:14:26.161Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:15:30.634Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:15:38.584Z] undefined [32minfo[39m: Mon Aug 07 2023 14:45:38 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:15:38.591Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:15:38.591Z] undefined [31merror[39m: Validation Errors
+[2023-08-07T09:15:42.675Z] undefined [32minfo[39m: Mon Aug 07 2023 14:45:42 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:15:42.718Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:15:42.719Z] undefined [31merror[39m: Username is taken

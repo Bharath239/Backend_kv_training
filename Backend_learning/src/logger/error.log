@@ -1,0 +1,17 @@
+[2023-08-07T08:57:37.313Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:03:53.930Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:04:05.899Z] undefined [32minfo[39m: Mon Aug 07 2023 14:34:05 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:04:06.003Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:11:37.261Z] undefined [32minfo[39m: Server is listening to 3000
+[2023-08-07T09:11:53.829Z] undefined [32minfo[39m: Mon Aug 07 2023 14:41:53 GMT+0530 (India Standard Time): /api/employees: GET
+[2023-08-07T09:11:53.861Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:12:06.215Z] undefined [32minfo[39m: Mon Aug 07 2023 14:42:06 GMT+0530 (India Standard Time): /api/employees/9: DELETE
+[2023-08-07T09:12:06.274Z] undefined [32minfo[39m: Request Successful
+[2023-08-07T09:13:30.120Z] undefined [32minfo[39m: Mon Aug 07 2023 14:43:30 GMT+0530 (India Standard Time): /api/employees: POST
+[2023-08-07T09:13:30.126Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:13:30.126Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:14:15.863Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:15:38.591Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:15:38.591Z] undefined [31merror[39m: Validation Errors
+[2023-08-07T09:15:42.718Z] undefined [31merror[39m: Request Failed
+[2023-08-07T09:15:42.719Z] undefined [31merror[39m: Username is taken

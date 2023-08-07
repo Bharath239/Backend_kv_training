@@ -13,7 +13,13 @@ class RoleController{
     getAllRoles = async(req: express.Request, res: express.Response, next: NextFunction) => {
         try{
             const roles = Object.values(Role);
-            res.status(200).send({data: roles, error: null, message: "OK"});
+            res.locals = {
+                data: roles,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }

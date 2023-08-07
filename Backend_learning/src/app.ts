@@ -8,7 +8,8 @@ import employeeRoute from "./route/employee.route";
 import errorMiddleware from "./middleware/error.middleware";
 import departmentRoute from "./route/department.route";
 import roleRoute from "./route/role.route";
-// import jsonformatter from "./middleware/jsonformatter.middleware";
+import logger from "./logger/logger";
+import jsonformatter from "./middleware/jsonformatter.middleware";
 
 const server = express();
 
@@ -17,17 +18,17 @@ server.use(loggerMiddleware);
 server.use("/api/employees", employeeRoute);
 server.use("/api/departments",departmentRoute);
 server.use("/api/roles",roleRoute);
-// server.use(jsonformatter);
+server.use(jsonformatter);
 server.use(errorMiddleware);
 
 server.get("/*", (req, res) => {
-  console.log(req.url);
+  logger.info(req.url);
   res.status(200).send("Hello World Typescript");
 });
 
 (async () => {
   await dataSource.initialize();
   server.listen(process.env.PORT, () => {
-    console.log("Server is listening to 3000");
+    logger.info("Server is listening to 3000");
   });
 })();

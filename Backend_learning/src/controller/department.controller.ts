@@ -14,17 +14,23 @@ class DepartmentController{
 
     constructor(private departmentService: DepartmentService){
         this.router = express.Router();
-        this.router.get("/",/*authenticate,*/this.getAllDepartments);
-        this.router.get("/:id",/*authenticate,*/this.getDepartmentById);
-        this.router.post("/",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.createDepartment);
-        this.router.put("/:id",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.updateDepartment);
-        this.router.delete("/:id",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.deleteDepartment);
+        this.router.get("/",authenticate,this.getAllDepartments);
+        this.router.get("/:id",authenticate,this.getDepartmentById);
+        this.router.post("/",authenticate,authorize([Role.HR,Role.ADMIN]),this.createDepartment);
+        this.router.put("/:id",authenticate,authorize([Role.HR,Role.ADMIN]),this.updateDepartment);
+        this.router.delete("/:id",authenticate,authorize([Role.HR,Role.ADMIN]),this.deleteDepartment);
     }
 
     getAllDepartments = async(req: express.Request, res: express.Response, next: NextFunction) => {
         try{
             const departments = await this.departmentService.getAllDepartments();
-            res.status(200).send({data: departments, error: null, message: "OK"});
+            res.locals = {
+                data: departments,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }
@@ -34,7 +40,13 @@ class DepartmentController{
         try{
             const departmentId = parseInt(req.params.id);
             const department = await this.departmentService.getDepartmentById(departmentId);
-            res.status(200).send({data: department, error: null, message: "OK"});
+            res.locals = {
+                data: department,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }
@@ -48,7 +60,13 @@ class DepartmentController{
                 throw new ValidationException(errors);
             }
             const department = await this.departmentService.createDepartment(createDepartmentDto);
-            res.status(201).send({data: department, error: null, message: "OK"});
+            res.locals = {
+                data: department,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }
@@ -63,7 +81,13 @@ class DepartmentController{
                 throw new ValidationException(errors);
             }
             const department = await this.departmentService.updateDepartment(createDepartmentDto,departmentId);
-            res.status(201).send({data: department, error: null, message: "OK"});
+            res.locals = {
+                data: department,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }
@@ -73,7 +97,13 @@ class DepartmentController{
         try{
             const departmentId = parseInt(req.params.id);
             const department = await this.departmentService.deleteDepartmentById(departmentId);
-            res.status(204).send(department);
+            res.locals = {
+                data: department,
+                errors: null,
+                message: "OK",
+            }
+            res.status(201);
+            next();
         }catch(error){
             next(error);
         }
