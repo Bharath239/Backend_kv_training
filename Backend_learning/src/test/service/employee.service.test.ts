@@ -234,28 +234,37 @@ describe("Employee Service tests", () => {
       });
     });
 
-    test("failure test(UsernameTaken)", async () => {
-      const mockFunction = jest.fn();
-      when(mockFunction).calledWith(1).mockResolvedValueOnce({
-        id: 1,
-        username: "bharath",
+    test("success test", async () => {
+        const mockid = jest.fn();
+        mockid.mockResolvedValueOnce({
+            name: "san",
+            username: "san",
+            password: "secret",
+            address: {
+                address_line_1: "KALAMpoor",
+              },
+          });
+        employeeRepository.findEmployeeById = mockid;
+        const mockFunctionUsername = jest.fn();
+        mockFunctionUsername.mockResolvedValueOnce("san");
+        employeeRepository.findEmployeeByUsername = mockFunctionUsername;
+        const createEmployeeDto = plainToInstance(CreateEmployeeDto, {
+          name: "san",
+          username: "san",
+          password: "secret",
+          address: {
+            address_line_1: "KALAMpoor",
+          },
+        });
+  
+        const mockFunction = jest.fn();
+        mockFunction.mockResolvedValue({
+          id: 1,
+          username: "bharath",
+        });
+        employeeRepository.putEmployee = mockFunction;
+        expect(async()=>await employeeService.putEmployee(createEmployeeDto, 1)).rejects.toThrow();
       });
-      const mockFunctionUsername = jest.fn();
-      mockFunctionUsername.mockResolvedValueOnce("san");
-      const createEmployeeDto = plainToInstance(CreateEmployeeDto, {
-        name: "san",
-        username: "san",
-        password: "secret",
-        address: {
-          address_line_1: "KALAMpoor",
-        },
-      });
-      employeeRepository.putEmployee = mockFunction;
-      employeeRepository.findEmployeeByUsername = mockFunctionUsername;
-      expect(
-        async () => await employeeService.putEmployee(createEmployeeDto, 1)
-      ).rejects.toThrow();
-    });
   });
 
   describe("test for patchEmployees", () => {
