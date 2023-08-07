@@ -50,7 +50,17 @@ class EmployeeController{
                 throw new ValidationException(errors);
             }
             const employee = await this.employeeService.createEmployee(createEmployeeDto);
+            // res.locals = {
+            //     data: employee,
+            //     errors: null,
+            //     message: "OK",
+            //     meta: {
+            //         length: 1,
+            //         total: 1
+            //     }
+            // }
             res.status(201).send({data: employee, errors: null, message: "OK"});
+            next();
         }
         catch(error){   
             next(error);

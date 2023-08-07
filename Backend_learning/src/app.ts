@@ -7,7 +7,8 @@ import dataSource from "./db/postgres.db";
 import employeeRoute from "./route/employee.route";
 import errorMiddleware from "./middleware/error.middleware";
 import departmentRoute from "./route/department.route";
-// import roleRoute from "./route/role.route";
+import roleRoute from "./route/role.route";
+// import jsonformatter from "./middleware/jsonformatter.middleware";
 
 const server = express();
 
@@ -15,7 +16,8 @@ server.use(express.json());
 server.use(loggerMiddleware);
 server.use("/api/employees", employeeRoute);
 server.use("/api/departments",departmentRoute);
-// server.use("/api/roles",roleRoute);
+server.use("/api/roles",roleRoute);
+// server.use(jsonformatter);
 server.use(errorMiddleware);
 
 server.get("/*", (req, res) => {

@@ -42,7 +42,7 @@ class Employee extends AbstractEntity{
     address: Address;
 
     @ManyToOne(() => Department, (department) => department.employees)
-    department: number;
+    department: Department;
 
 }
 
