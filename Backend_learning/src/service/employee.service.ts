@@ -40,7 +40,7 @@ class EmployeeService{
         newemployee.password = await bcrypt.hash(createEmployeeDto.password,10);
         newemployee.joiningDate = createEmployeeDto.joiningDate;
         newemployee.experience = createEmployeeDto.experience;
-        // newemployee.departmentId = createEmployeeDto.departmentId;
+        newemployee.departmentId = createEmployeeDto.departmentId;
         newemployee.role = createEmployeeDto.role;
         const newaddress = new Address();
         
@@ -68,7 +68,7 @@ class EmployeeService{
         employee.password = await bcrypt.hash(createEmployeeDto.password,10);
         employee.joiningDate = createEmployeeDto.joiningDate;
         employee.experience = createEmployeeDto.experience;
-        // employee.departmentId = createEmployeeDto.departmentId;
+        employee.departmentId = createEmployeeDto.departmentId;
         employee.role = createEmployeeDto.role;
 
         employee.address.address_line_1 = createEmployeeDto.address.address_line_1;

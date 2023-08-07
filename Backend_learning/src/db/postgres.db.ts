@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv"
+dotenv.config({path: __dirname+"/../env"})
 import { DataSource } from "typeorm"
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 

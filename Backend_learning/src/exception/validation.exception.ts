@@ -26,6 +26,4 @@ class ValidationException extends httpException{
     }
 }
 
-// use recursion to find children constraints
-
 export default ValidationException;

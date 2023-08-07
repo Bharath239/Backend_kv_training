@@ -14,11 +14,11 @@ class DepartmentController{
 
     constructor(private departmentService: DepartmentService){
         this.router = express.Router();
-        this.router.get("/",authenticate,this.getAllDepartments);
-        this.router.get("/:id",authenticate,this.getDepartmentById);
-        this.router.post("/",authenticate,authorize([Role.HR,Role.ADMIN]),this.createDepartment);
-        this.router.put("/:id",authenticate,authorize([Role.HR,Role.ADMIN]),this.updateDepartment);
-        this.router.delete("/:id",authenticate,authorize([Role.HR,Role.ADMIN]),this.deleteDepartment);
+        this.router.get("/",/*authenticate,*/this.getAllDepartments);
+        this.router.get("/:id",/*authenticate,*/this.getDepartmentById);
+        this.router.post("/",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.createDepartment);
+        this.router.put("/:id",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.updateDepartment);
+        this.router.delete("/:id",/*authenticate,authorize([Role.HR,Role.ADMIN]),*/this.deleteDepartment);
     }
 
     getAllDepartments = async(req: express.Request, res: express.Response, next: NextFunction) => {
@@ -47,7 +47,7 @@ class DepartmentController{
             if(errors.length > 0){
                 throw new ValidationException(errors);
             }
-            const department = this.departmentService.createDepartment(createDepartmentDto);
+            const department = await this.departmentService.createDepartment(createDepartmentDto);
             res.status(201).send({data: department, error: null, message: "OK"});
         }catch(error){
             next(error);
@@ -56,13 +56,13 @@ class DepartmentController{
 
     updateDepartment = async(req: express.Request, res: express.Response, next: NextFunction) => {
         try{
-            const departmentId = parseInt(req.body.id);
+            const departmentId = parseInt(req.params.id);
             const createDepartmentDto = plainToInstance(CreateDepartmentDto,req.body);
             const errors = await validate(createDepartmentDto);
             if(errors.length > 0){
                 throw new ValidationException(errors);
             }
-            const department = this.departmentService.updateDepartment(createDepartmentDto,departmentId);
+            const department = await this.departmentService.updateDepartment(createDepartmentDto,departmentId);
             res.status(201).send({data: department, error: null, message: "OK"});
         }catch(error){
             next(error);

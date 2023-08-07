@@ -27,7 +27,7 @@ class DepartmentService {
     async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
         const departmentnameCheck = await this.departmentRepository.findDepartmentByName(createDepartmentDto.name);
         if(departmentnameCheck){
-            throw new HttpException(403,"Department already exist");
+            throw new HttpException(409,"Department already exist");
         }
         const newDepartment = new Department();
         newDepartment.name = createDepartmentDto.name;
@@ -38,7 +38,7 @@ class DepartmentService {
         const department = await this.getDepartmentById(id);
         const departmentnameCheck = await this.departmentRepository.findDepartmentByName(createDepartmentDto.name);
         if(departmentnameCheck){
-            throw new HttpException(403,"Department already exist");
+            throw new HttpException(409,"Department already exist");
         }   
         department.name = createDepartmentDto.name;
         return await this.departmentRepository.updateDepartment(department);
